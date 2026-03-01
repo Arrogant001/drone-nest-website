@@ -4,23 +4,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Bootstrap 5.3.8 CSS（你提供的链接） -->
+    <title>量益智航 - 低空智慧物流</title>
+    <!-- Bootstrap 5.3.8 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <!-- Popper.js 2.11.8（你提供的链接，Bootstrap组件依赖） -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
-    <!-- Bootstrap 5.3.8 JS（你提供的链接，和CSS版本匹配） -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
-        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
-        crossorigin="anonymous"></script>
-    <title>Drone Nest - 低空智慧物流</title>
+    <!-- Bootstrap图标库（可选） -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        /* 全局基础样式 */
+        body {
+            padding-top: 70px;
+            /* 避免内容被固定导航栏遮挡 */
+            margin: 0;
+            font-family: "Microsoft YaHei", sans-serif;
+        }
+
+        /* 导航栏基础样式 */
+        .navbar {
+            background-color: white !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+        }
+
+        /* 公司名称样式（量益智航） */
+        .navbar-brand {
+            color: #0a2463 !important;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 0.15em;
+            /* 字间距 */
+        }
+
+        /* 导航项通用样式 */
+        .nav-link {
+            color: black !important;
+            font-size: 1rem;
+            padding: 0 1.2rem !important;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        /* 导航项分隔符（/）样式 */
+        .nav-item.divider {
+            color: #e0e0e0;
+            font-size: 1rem;
+            padding: 0 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 隐藏产品中心下拉箭头 */
+        .dropdown-toggle::after {
+            display: none !important;
+        }
+
+        /* --- 桌面端样式 (≥768px) --- */
+        @media (min-width: 768px) {
+
+            /* Logo居左 */
+            .navbar-brand {
+                margin-right: auto !important;
+                margin-left: 3rem !important;
+            }
+
+            /* 产品中心下拉菜单：正下方居中 */
+            .nav-item.dropdown {
+                position: relative;
+            }
+
+            .nav-item.dropdown:hover .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-menu {
+                top: 100% !important;
+                left: 50% !important;
+                transform: translateX(-50%) !important;
+                margin-top: 0 !important;
+                min-width: 150px;
+                border: none;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                padding: 0;
+            }
+
+            .dropdown-item {
+                text-align: center !important;
+                padding: 0.8rem 1.5rem !important;
+                font-weight: 300;
+                color: black !important;
+                transition: all 0.2s ease;
+            }
+
+            .dropdown-item:hover {
+                background-color: #f5f9ff !important;
+                color: #0a2463 !important;
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background-color: #0a2463;
+                transition: width 0.3s ease;
+            }
+
+            .nav-link:hover::after,
+            .nav-link.active::after {
+                width: 100%;
+            }
+
+            .nav-link:hover {
+                color: #0a2463 !important;
+            }
+        }
+
+        /* --- 移动端样式 (<768px) --- */
+        @media (max-width: 767.98px) {
+
+            /* Logo严格居中 */
+            .navbar-brand {
+                margin: 0 auto !important;
+                display: block;
+                text-align: center;
+                width: 100%;
+            }
+
+            /* 汉堡按钮：缩小+固定左上角 */
+            .navbar-toggler {
+                position: fixed !important;
+                top: 12px;
+                left: 12px;
+                width: 32px;
+                height: 32px;
+                padding: 0 !important;
+                border: none !important;
+                outline: none !important;
+                box-shadow: none !important;
+            }
+
+            /* 汉堡图标缩小 */
+            .navbar-toggler-icon {
+                width: 24px !important;
+                height: 24px !important;
+                background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 30 30%27%3e%3cpath stroke=%27rgba(0, 0, 0, 0.75)%27 stroke-linecap=%27round%27 stroke-miterlimit=%2710%27 stroke-width=%272%27 d=%27M4 7h22M4 15h22M4 23h22%27/%3e%3c/svg%3e') !important;
+            }
+
+            /* 隐藏分隔符 */
+            .nav-item.divider {
+                display: none !important;
+            }
+
+            /* 移动端侧边栏菜单样式 */
+            .offcanvas-body .nav-link {
+                padding: 0.8rem 1rem !important;
+                border-bottom: 1px solid #eee;
+            }
+
+            .offcanvas-body .dropdown-menu {
+                border: none;
+                box-shadow: none;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <!-- Bootstrap 样式测试代码 -->
-    <h1 class="text-center mt-5">Hello, Drone World!</h1>
+    <!-- 导航栏（核心） -->
+    <nav class="navbar navbar-expand-md fixed-top">
+        <div class="container-fluid p-0">
+            <!-- 移动端汉堡按钮 -->
+            <button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas"
+                data-bs-target="#mobileSidebar" aria-controls="mobileSidebar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- 公司名称Logo -->
+            <a class="navbar-brand" href="#">量益智航</a>
+
+            <!-- 桌面端导航菜单 -->
+            <div class="collapse navbar-collapse justify-content-end d-none d-md-flex">
+                <ul class="navbar-nav align-items-center">
+                    <li class="nav-item"><a class="nav-link active" href="#">首页</a></li>
+                    <li class="nav-item divider">/</li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#">产品中心</a>
+                        <ul class="dropdown-menu text-center">
+                            <li><a class="dropdown-item" href="#">无人机</a></li>
+                            <li><a class="dropdown-item" href="#">机巢</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item divider">/</li>
+                    <li class="nav-item"><a class="nav-link" href="#">解决方案</a></li>
+                    <li class="nav-item divider">/</li>
+                    <li class="nav-item"><a class="nav-link" href="#">关于我们</a></li>
+                    <li class="nav-item divider">/</li>
+                    <li class="nav-item"><a class="nav-link" href="#">联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 移动端侧边栏菜单 -->
+        <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" style="color: #0a2463; font-weight: bold;">量益智航</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="关闭"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul class="navbar-nav w-100">
+                    <li class="nav-item"><a class="nav-link active" href="#">首页</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">产品中心</a>
+                        <ul class="dropdown-menu w-100">
+                            <li><a class="dropdown-item" href="#">无人机</a></li>
+                            <li><a class="dropdown-item" href="#">机巢</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">解决方案</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">关于我们</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">联系我们</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 测试内容（可替换为你的页面内容） -->
+    <div class="container py-5">
+        <h2 class="text-center mb-4">量益智航 - 低空智慧物流解决方案提供商</h2>
+        <p class="text-center">测试滚动效果，导航栏固定在顶部，样式无错乱</p>
+        <div
+            style="height: 1000px; background-color: #f8f9fa; margin-top: 20px; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+            页面主体内容区域
+        </div>
+    </div>
+
+    <!-- Bootstrap JS + Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js"
+        integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
