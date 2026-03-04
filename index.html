@@ -157,6 +157,8 @@
                 border: none;
                 box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
                 padding: 0;
+                display: none;
+                /* 新增：一级菜单默认隐藏，仅hover显示 */
             }
 
             .dropdown-item {
@@ -165,11 +167,38 @@
                 font-weight: 300;
                 color: var(--black) !important;
                 transition: all 0.2s ease;
+                position: relative;
+                /* 新增：为二级菜单定位做准备 */
             }
 
             .dropdown-item:hover {
                 background-color: var(--gray-light) !important;
                 color: var(--primary-dark) !important;
+            }
+
+            /* 新增：二级菜单核心样式 - 桌面端 */
+            .dropdown-submenu {
+                position: relative;
+            }
+
+            /* 二级菜单：仅在机巢右侧显示 */
+            .dropdown-submenu .dropdown-menu {
+                top: 0 !important;
+                left: 100% !important;
+                /* 右侧对齐机巢选项 */
+                transform: translateX(0) !important;
+                /* 取消居中偏移 */
+                margin-top: 0 !important;
+                margin-left: 0 !important;
+                min-width: 180px;
+                /* 二级菜单略宽，适配机巢名称 */
+                display: none;
+                /* 默认隐藏，仅悬停机巢显示 */
+            }
+
+            /* 新增：仅悬停机巢时显示二级菜单 */
+            .dropdown-submenu:hover>.dropdown-menu {
+                display: block;
             }
 
             .nav-link::after {
@@ -237,6 +266,19 @@
 
             .offcanvas-body .dropdown-menu {
                 border: none;
+            }
+
+            /* 修复：把原错误嵌套的桌面端样式移到正确位置，此处仅保留移动端二级菜单样式 */
+            .dropdown-submenu {
+                position: relative;
+            }
+
+            /* 移动端二级菜单：缩进显示 */
+            .dropdown-submenu .dropdown-menu {
+                top: 0 !important;
+                left: 0 !important;
+                transform: translateX(0) !important;
+                margin-left: 1rem !important;
             }
         }
 
@@ -381,7 +423,7 @@
 </head>
 
 <body>
-    <!-- 导航栏（核心） -->
+    <!-- 导航栏（最终版：适配精准二级菜单） -->
     <nav class="navbar navbar-expand-md fixed-top">
         <div class="container-fluid p-0">
             <!-- 移动端汉堡按钮 -->
@@ -390,19 +432,31 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <!-- 公司名称Logo -->
-            <a class="navbar-brand" href="#">量益智航</a>
+            <!-- 公司Logo -->
+            <a class="navbar-brand" href="index.html">量益智航</a>
 
-            <!-- 桌面端导航菜单 -->
+            <!-- 桌面端导航菜单（精简优化：适配二级菜单） -->
             <div class="collapse navbar-collapse justify-content-end d-none d-md-flex">
                 <ul class="navbar-nav align-items-center">
-                    <li class="nav-item"><a class="nav-link active" href="#">首页</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">首页</a></li>
                     <li class="nav-item divider">/</li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#">产品中心</a>
+                        <a class="nav-link dropdown-toggle" href="products.html">
+                            产品中心
+                        </a>
+                        <!-- 一级下拉菜单 -->
                         <ul class="dropdown-menu text-center">
-                            <li><a class="dropdown-item" href="#">无人机</a></li>
-                            <li><a class="dropdown-item" href="#">机巢</a></li>
+                            <li><a class="dropdown-item" href="product-a80.html">A80无人机</a></li>
+                            <!-- 机巢：二级下拉选项（核心修改：统一类名+去掉冗余属性） -->
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item" href="#">
+                                    机巢
+                                </a>
+                                <!-- 二级下拉菜单（机巢种类） -->
+                                <ul class="dropdown-menu text-center">
+                                    <li><a class="dropdown-item" href="product-机巢.html">N600全自动机巢</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item divider">/</li>
@@ -415,20 +469,28 @@
             </div>
         </div>
 
-        <!-- 移动端侧边栏菜单 -->
+        <!-- 移动端侧边栏（同步优化：统一二级菜单类名） -->
         <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="mobileSidebar">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" style="color: #0a2463; font-weight: bold;">量益智航</h5>
+                <h5 class="offcanvas-title"
+                    style="color: var(--primary-dark); font-weight: bold; letter-spacing: 0.15em;">
+                    量益智航</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="关闭"></button>
             </div>
             <div class="offcanvas-body">
                 <ul class="navbar-nav w-100">
-                    <li class="nav-item"><a class="nav-link active" href="#">首页</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">首页</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">产品中心</a>
                         <ul class="dropdown-menu w-100">
-                            <li><a class="dropdown-item" href="#">无人机</a></li>
-                            <li><a class="dropdown-item" href="#">机巢</a></li>
+                            <li><a class="dropdown-item" href="product-a80.html">A80无人机</a></li>
+                            <!-- 移动端机巢二级下拉（核心修改：统一用dropdown-submenu类） -->
+                            <li class="dropdown-submenu">
+                                <a class="dropdown-item dropdown-toggle" href="#" data-bs-toggle="dropdown">机巢</a>
+                                <ul class="dropdown-menu w-100">
+                                    <li><a class="dropdown-item" href="product-机巢.html">N600全自动机巢</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="#">解决方案</a></li>
